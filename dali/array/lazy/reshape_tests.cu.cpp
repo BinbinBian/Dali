@@ -136,8 +136,6 @@ TEST(ArrayReshapeTests, take_from_rows_assign_lazy) {
     EXPECT_EQ(7,  (int)x[1][3]);
 }
 
-
-
 TEST(ArrayReshapeTests, gather_assign_lazy) {
     auto x = Array::zeros({4, 2}, DTYPE_INT32);
     x = initializer::arange();
@@ -169,4 +167,53 @@ TEST(ArrayReshapeTests, gather_assign_lazy) {
     EXPECT_EQ(5,  (int)x[2][1]);
     EXPECT_EQ(6,  (int)x[3][0]);
     EXPECT_EQ(7,  (int)x[3][1]);
+}
+
+TEST(ArrayReshapeTests, gather_assign_advanced) {
+    auto x = Array::zeros({2, 2, 4, 2}, DTYPE_INT32);
+    x = initializer::arange();
+
+    Array y = Array({2, 4, 2}, DTYPE_INT32);
+    y = std::vector<std::vector<std::vector<int>>> {
+        {
+            {10,       20},
+            {300,     400},
+            {5000,   6000},
+            {70000, 80000},
+        },
+        {
+            {15,       25},
+            {305,     405},
+            {5005,   6005},
+            {70005, 80005},
+        }
+    };
+
+    Array indices({4, 5}, DTYPE_INT32);
+    ((Array)indices[Slice(0, 2)]) = 0;
+    ((Array)indices[Slice(2, 4)]) = 1;
+
+    auto x_view = x[indices];
+    EXPECT_EQ(std::vector<int>({4, 5, 2, 4, 2}), x_view.shape());
+
+    std::cout << "hello" << std::endl;
+
+    Array blah = x_view;
+
+    blah.print();
+
+    // x_view.print();
+
+    std::cout << "hello" << std::endl;
+
+    y.print();
+
+    x_view += (Array)y[Broadcast()][Broadcast()];
+
+    x_view.print();
+
+    EXPECT_TRUE(Array::equals(x[0][0], 10 * y));
+    EXPECT_TRUE(Array::equals(x[1][0], 10 * y));
+    EXPECT_TRUE(Array::equals(x[1][0], 10 * y));
+    EXPECT_TRUE(Array::equals(x[1][1], 10 * y));
 }
