@@ -43,17 +43,17 @@ struct LazyTake : public LazyFunction<LazyTake<SrcExp, IndexExp>, SrcExp, IndexE
                          const std::vector<int>& output_shape,
                          const lazy::EvaluationSpec<devT, T, ndim>& wrap_array) const ->
             decltype(mshadow::expr::take(
-                MshadowWrapper<devT, int, decltype(indices)>::template wrap<1>(
+                MshadowWrapper<devT, int, decltype(indices)>::wrap(
                     indices,
                     device,
                     indices.bshape(),
                     lazy::EvaluationSpec<devT, int, 1>::collapse_leading()
                 ),
-                MshadowWrapper<devT, T, decltype(src)>::template wrap<2>(
+                MshadowWrapper<devT, T, decltype(src)>::wrap(
                     src,
                     device,
                     src.bshape(),
-                    wrap_array.template collapse_trailing_d<2>()
+                    wrap_array.template collapse_trailing()
                 )
             )) {
 
@@ -65,17 +65,17 @@ struct LazyTake : public LazyFunction<LazyTake<SrcExp, IndexExp>, SrcExp, IndexE
         // static_assert(mshadow::expr::ExpInfo<cool_type>::kDim == 1, "release the kraken");
 
         return mshadow::expr::take(
-            MshadowWrapper<devT, int, decltype(indices)>::template wrap<1>(
+            MshadowWrapper<devT, int, decltype(indices)>::wrap(
                 indices,
                 device,
                 indices.bshape(),
                 lazy::EvaluationSpec<devT, int, 1>::collapse_leading()
             ),
-            MshadowWrapper<devT, T, decltype(src)>::template wrap<2>(
+            MshadowWrapper<devT, T, decltype(src)>::wrap(
                 src,
                 device,
                 src.bshape(),
-                wrap_array.template collapse_trailing_d<2>()
+                wrap_array.template collapse_trailing()
             )
         );
     }
@@ -83,7 +83,14 @@ struct LazyTake : public LazyFunction<LazyTake<SrcExp, IndexExp>, SrcExp, IndexE
 
 
 template<typename SrcExp, typename IndexExp>
-const int LazyTake<SrcExp, IndexExp>::evaluation_dim = 2;
+const int LazyTake<SrcExp, IndexExp>::evaluation_dim =
+    ((lazy::LazyEvaluationDim<SrcExp>::value == lazy::EVALUATION_DIM_ANY) ?
+             lazy::EVALUATION_DIM_ANY :
+             ((lazy::LazyEvaluationDim<SrcExp>::value > 0) ?
+                 lazy::LazyEvaluationDim<SrcExp>::value :
+                 lazy::EVALUATION_DIM_ERROR
+             )
+        );
 
 template<typename SrcExp, typename IndexExp>
 const bool LazyTake<SrcExp, IndexExp>::collapse_leading = false;

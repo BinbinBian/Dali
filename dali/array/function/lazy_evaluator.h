@@ -9,6 +9,7 @@
 #include "dali/array/function/lazy_function.h"
 #include "dali/array/function/operator.h"
 #include "dali/array/function/typed_array.h"
+#include "dali/utils/print_utils.h"
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -55,7 +56,6 @@ struct LazyEvaluator : public Function<LazyEvaluator<DestExpr,SrcExpr>, DestExpr
         // to fit out.array.shape(). Here we are assuming that out.array.shape()
         // is not broadcasted, so when the computation actually happens
         // the shape is already fully known every step of the way.
-
         operator_assign<operator_t, evaluation_dim>(
             out,
             MshadowWrapper<devT,T,decltype(expr)>::wrap(expr,
@@ -89,8 +89,8 @@ struct LazyEvaluator : public Function<LazyEvaluator<DestExpr,SrcExpr>, DestExpr
             MshadowWrapper<devT,T,decltype(expr)>::wrap(expr,
                                                         out.device,
                                                         out.shape,
-                                                        lazy::EvaluationSpec<devT,T,evaluation_dim>()),
-            SrcExpr::collapse_leading
+                                                        lazy::EvaluationSpec<devT,T,evaluation_dim>::collapse_trailing()),
+            /*collapse_leading=*/false
         );
     }
 };
