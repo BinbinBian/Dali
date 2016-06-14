@@ -35,7 +35,7 @@ namespace internal {
      *
      */
     template<int dstdim>
-    mshadow::Shape<dstdim> canonical_reshape(const std::vector<int>& src_shape, bool collapse_leading=true);
+    mshadow::Shape<dstdim> canonical_reshape(const std::vector<int>& src_shape, bool collapse_leading=true, int dim_to_collapse=0);
 }
 ////////////////////////////////////////////////////////////////////////////////
 //                            TYPED ARRAY SHARED                              //
@@ -48,7 +48,7 @@ namespace internal {
     struct TypedArrayShared {
       private:
         template<int dim>
-        mshadow::Tensor<MDevT, dim, T> mtensor(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true) const;
+        mshadow::Tensor<MDevT, dim, T> mtensor(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true, const int& dim_to_collapse=0) const;
 
         T* ptr_internal(memory::AM access_mode=memory::AM_READONLY) const;
       public:
@@ -61,10 +61,10 @@ namespace internal {
         T* ptr(memory::AM access_mode=memory::AM_READONLY) const;
 
         template<int dim>
-        mshadow::Tensor<MDevT, dim, T> contiguous_d(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true) const;
+        mshadow::Tensor<MDevT, dim, T> contiguous_d(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true, const int& dim_to_collapse=0) const;
 
         template<int dim>
-        DaliWrapperExp<MDevT, dim, T> d(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true) const;
+        DaliWrapperExp<MDevT, dim, T> d(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true, const int& dim_to_collapse=0) const;
 
 
         // returns pair (<transposed>, <tensor>), where <transposed> means that
@@ -81,15 +81,15 @@ namespace internal {
         TypedArrayShared(const Array& array_, const memory::Device& device_, const std::vector<int>& output_shape_);
 
         // CONVENIENCE WRAPPERS
-        mshadow::Tensor<MDevT, 1, T> contiguous_d1(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true) const;
-        mshadow::Tensor<MDevT, 2, T> contiguous_d2(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true) const;
-        mshadow::Tensor<MDevT, 3, T> contiguous_d3(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true) const;
-        mshadow::Tensor<MDevT, 4, T> contiguous_d4(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true) const;
+        mshadow::Tensor<MDevT, 1, T> contiguous_d1(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true, const int& dim_to_collapse=0) const;
+        mshadow::Tensor<MDevT, 2, T> contiguous_d2(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true, const int& dim_to_collapse=0) const;
+        mshadow::Tensor<MDevT, 3, T> contiguous_d3(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true, const int& dim_to_collapse=0) const;
+        mshadow::Tensor<MDevT, 4, T> contiguous_d4(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true, const int& dim_to_collapse=0) const;
 
-        DaliWrapperExp<MDevT, 1, T> d1(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true) const;
-        DaliWrapperExp<MDevT, 2, T> d2(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true) const;
-        DaliWrapperExp<MDevT, 3, T> d3(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true) const;
-        DaliWrapperExp<MDevT, 4, T> d4(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true) const;
+        DaliWrapperExp<MDevT, 1, T> d1(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true, const int& dim_to_collapse=0) const;
+        DaliWrapperExp<MDevT, 2, T> d2(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true, const int& dim_to_collapse=0) const;
+        DaliWrapperExp<MDevT, 3, T> d3(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true, const int& dim_to_collapse=0) const;
+        DaliWrapperExp<MDevT, 4, T> d4(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true, const int& dim_to_collapse=0) const;
     };
 }  // namespace internal
 

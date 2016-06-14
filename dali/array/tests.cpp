@@ -364,10 +364,19 @@ TEST(ArrayTests, inplace_strided_addition) {
 }
 
 TEST(ArrayTests, canonical_reshape) {
-    ASSERT_EQ(mshadow::Shape1(60),        internal::canonical_reshape<1>({3,4,5}));
-    ASSERT_EQ(mshadow::Shape2(12,5),      internal::canonical_reshape<2>({3,4,5}));
-    ASSERT_EQ(mshadow::Shape3(3,4,5),     internal::canonical_reshape<3>({3,4,5}));
-    ASSERT_EQ(mshadow::Shape4(1,3,4,5),   internal::canonical_reshape<4>({3,4,5}));
+    EXPECT_EQ(mshadow::Shape1(60),        internal::canonical_reshape<1>({3,4,5}));
+    EXPECT_EQ(mshadow::Shape2(12,5),      internal::canonical_reshape<2>({3,4,5}));
+    EXPECT_EQ(mshadow::Shape3(3,4,5),     internal::canonical_reshape<3>({3,4,5}));
+    EXPECT_EQ(mshadow::Shape4(1,3,4,5),   internal::canonical_reshape<4>({3,4,5}));
+}
+
+TEST(ArrayTests, canonical_reshape_with_collapse) {
+    EXPECT_EQ(mshadow::Shape3(6,4,5),    internal::canonical_reshape<3>({2,3,4,5}, false, 2));
+    EXPECT_EQ(mshadow::Shape3(24,5,1),   internal::canonical_reshape<3>({2,3,4,5}, false, 3));
+    EXPECT_EQ(mshadow::Shape3(2,3,20),   internal::canonical_reshape<3>({2,3,4,5}, true, 2));
+    EXPECT_EQ(mshadow::Shape3(1,2,60),   internal::canonical_reshape<3>({2,3,4,5}, true, 3));
+    EXPECT_EQ(mshadow::Shape4(6,4,5,1),  internal::canonical_reshape<4>({2,3,4,5}, false, 2));
+    EXPECT_EQ(mshadow::Shape4(1,2,3,20), internal::canonical_reshape<4>({2,3,4,5}, true, 2));
 }
 
 std::vector<Slice> generate_interesting_slices(int dim_size) {

@@ -54,22 +54,22 @@ namespace internal {
 
 
     template<typename MDevT, typename T>
-    mshadow::Tensor<MDevT, 1, T> TypedArrayShared<MDevT,T>::contiguous_d1(memory::AM access_mode, bool collapse_leading) const { return contiguous_d<1>(access_mode, collapse_leading); }
+    mshadow::Tensor<MDevT, 1, T> TypedArrayShared<MDevT,T>::contiguous_d1(memory::AM access_mode, bool collapse_leading, const int& dim_to_collapse) const { return contiguous_d<1>(access_mode, collapse_leading, dim_to_collapse); }
     template<typename MDevT, typename T>
-    mshadow::Tensor<MDevT, 2, T> TypedArrayShared<MDevT,T>::contiguous_d2(memory::AM access_mode, bool collapse_leading) const { return contiguous_d<2>(access_mode, collapse_leading); }
+    mshadow::Tensor<MDevT, 2, T> TypedArrayShared<MDevT,T>::contiguous_d2(memory::AM access_mode, bool collapse_leading, const int& dim_to_collapse) const { return contiguous_d<2>(access_mode, collapse_leading, dim_to_collapse); }
     template<typename MDevT, typename T>
-    mshadow::Tensor<MDevT, 3, T> TypedArrayShared<MDevT,T>::contiguous_d3(memory::AM access_mode, bool collapse_leading) const { return contiguous_d<3>(access_mode, collapse_leading); }
+    mshadow::Tensor<MDevT, 3, T> TypedArrayShared<MDevT,T>::contiguous_d3(memory::AM access_mode, bool collapse_leading, const int& dim_to_collapse) const { return contiguous_d<3>(access_mode, collapse_leading, dim_to_collapse); }
     template<typename MDevT, typename T>
-    mshadow::Tensor<MDevT, 4, T> TypedArrayShared<MDevT,T>::contiguous_d4(memory::AM access_mode, bool collapse_leading) const { return contiguous_d<4>(access_mode, collapse_leading); }
+    mshadow::Tensor<MDevT, 4, T> TypedArrayShared<MDevT,T>::contiguous_d4(memory::AM access_mode, bool collapse_leading, const int& dim_to_collapse) const { return contiguous_d<4>(access_mode, collapse_leading, dim_to_collapse); }
 
     template<typename MDevT, typename T>
-    DaliWrapperExp<MDevT, 1, T> TypedArrayShared<MDevT,T>::d1(memory::AM access_mode, bool collapse_leading) const { return d<1>(access_mode, collapse_leading); }
+    DaliWrapperExp<MDevT, 1, T> TypedArrayShared<MDevT,T>::d1(memory::AM access_mode, bool collapse_leading, const int& dim_to_collapse) const { return d<1>(access_mode, collapse_leading, dim_to_collapse); }
     template<typename MDevT, typename T>
-    DaliWrapperExp<MDevT, 2, T> TypedArrayShared<MDevT,T>::d2(memory::AM access_mode, bool collapse_leading) const { return d<2>(access_mode, collapse_leading); }
+    DaliWrapperExp<MDevT, 2, T> TypedArrayShared<MDevT,T>::d2(memory::AM access_mode, bool collapse_leading, const int& dim_to_collapse) const { return d<2>(access_mode, collapse_leading, dim_to_collapse); }
     template<typename MDevT, typename T>
-    DaliWrapperExp<MDevT, 3, T> TypedArrayShared<MDevT,T>::d3(memory::AM access_mode, bool collapse_leading) const { return d<3>(access_mode, collapse_leading); }
+    DaliWrapperExp<MDevT, 3, T> TypedArrayShared<MDevT,T>::d3(memory::AM access_mode, bool collapse_leading, const int& dim_to_collapse) const { return d<3>(access_mode, collapse_leading, dim_to_collapse); }
     template<typename MDevT, typename T>
-    DaliWrapperExp<MDevT, 4, T> TypedArrayShared<MDevT,T>::d4(memory::AM access_mode, bool collapse_leading) const { return d<4>(access_mode, collapse_leading); }
+    DaliWrapperExp<MDevT, 4, T> TypedArrayShared<MDevT,T>::d4(memory::AM access_mode, bool collapse_leading, const int& dim_to_collapse) const { return d<4>(access_mode, collapse_leading, dim_to_collapse); }
 
 
     template class TypedArrayShared<mshadow::cpu, int>;
