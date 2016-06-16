@@ -137,23 +137,23 @@ namespace internal {
         bool contiguous_memory() const;
 
         template<int dim>
-        mshadow::expr::TakeFromRowsExp<mshadow::Tensor<MDevT, dim, IndexT>, mshadow::Tensor<MDevT, dim + 1, T>, T, IndexT> contiguous_d(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true) const;
+        mshadow::expr::TakeFromRowsExp<mshadow::Tensor<MDevT, dim, IndexT>, mshadow::Tensor<MDevT, dim + 1, T>, T, IndexT> contiguous_d(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true, const int& dim_to_collapse=0) const;
 
         template<int dim>
-        mshadow::expr::TakeFromRowsExp<DaliWrapperExp<MDevT, dim, IndexT>, DaliWrapperExp<MDevT, dim + 1, T>, T, IndexT> d(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true) const;
+        mshadow::expr::TakeFromRowsExp<DaliWrapperExp<MDevT, dim, IndexT>, DaliWrapperExp<MDevT, dim + 1, T>, T, IndexT> d(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true, const int& dim_to_collapse=0) const;
 
         TypedArraySubtensorShared(const Array& _source, const Array& _indices, const std::vector<int> shape, const memory::Device& _device);
 
         // CONVENIENCE WRAPPERS
-        mshadow::expr::TakeFromRowsExp<mshadow::Tensor<MDevT, 1, IndexT>, mshadow::Tensor<MDevT, 2, T>, T, IndexT> contiguous_d1(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true) const;
-        mshadow::expr::TakeFromRowsExp<mshadow::Tensor<MDevT, 2, IndexT>, mshadow::Tensor<MDevT, 3, T>, T, IndexT> contiguous_d2(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true) const;
-        mshadow::expr::TakeFromRowsExp<mshadow::Tensor<MDevT, 3, IndexT>, mshadow::Tensor<MDevT, 4, T>, T, IndexT> contiguous_d3(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true) const;
-        mshadow::expr::TakeFromRowsExp<mshadow::Tensor<MDevT, 4, IndexT>, mshadow::Tensor<MDevT, 5, T>, T, IndexT> contiguous_d4(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true) const;
+        mshadow::expr::TakeFromRowsExp<mshadow::Tensor<MDevT, 1, IndexT>, mshadow::Tensor<MDevT, 2, T>, T, IndexT> contiguous_d1(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true, const int& dim_to_collapse=0) const;
+        mshadow::expr::TakeFromRowsExp<mshadow::Tensor<MDevT, 2, IndexT>, mshadow::Tensor<MDevT, 3, T>, T, IndexT> contiguous_d2(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true, const int& dim_to_collapse=0) const;
+        mshadow::expr::TakeFromRowsExp<mshadow::Tensor<MDevT, 3, IndexT>, mshadow::Tensor<MDevT, 4, T>, T, IndexT> contiguous_d3(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true, const int& dim_to_collapse=0) const;
+        mshadow::expr::TakeFromRowsExp<mshadow::Tensor<MDevT, 4, IndexT>, mshadow::Tensor<MDevT, 5, T>, T, IndexT> contiguous_d4(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true, const int& dim_to_collapse=0) const;
 
-        mshadow::expr::TakeFromRowsExp<DaliWrapperExp<MDevT, 1, IndexT>, DaliWrapperExp<MDevT, 2, T>, T, IndexT> d1(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true) const;
-        mshadow::expr::TakeFromRowsExp<DaliWrapperExp<MDevT, 2, IndexT>, DaliWrapperExp<MDevT, 3, T>, T, IndexT> d2(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true) const;
-        mshadow::expr::TakeFromRowsExp<DaliWrapperExp<MDevT, 3, IndexT>, DaliWrapperExp<MDevT, 4, T>, T, IndexT> d3(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true) const;
-        mshadow::expr::TakeFromRowsExp<DaliWrapperExp<MDevT, 4, IndexT>, DaliWrapperExp<MDevT, 5, T>, T, IndexT> d4(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true) const;
+        mshadow::expr::TakeFromRowsExp<DaliWrapperExp<MDevT, 1, IndexT>, DaliWrapperExp<MDevT, 2, T>, T, IndexT> d1(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true, const int& dim_to_collapse=0) const;
+        mshadow::expr::TakeFromRowsExp<DaliWrapperExp<MDevT, 2, IndexT>, DaliWrapperExp<MDevT, 3, T>, T, IndexT> d2(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true, const int& dim_to_collapse=0) const;
+        mshadow::expr::TakeFromRowsExp<DaliWrapperExp<MDevT, 3, IndexT>, DaliWrapperExp<MDevT, 4, T>, T, IndexT> d3(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true, const int& dim_to_collapse=0) const;
+        mshadow::expr::TakeFromRowsExp<DaliWrapperExp<MDevT, 4, IndexT>, DaliWrapperExp<MDevT, 5, T>, T, IndexT> d4(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true, const int& dim_to_collapse=0) const;
     };
 }  // namespace internal
 
@@ -194,23 +194,23 @@ namespace internal {
         bool contiguous_memory() const;
 
         template<int dim>
-        mshadow::expr::TakeExp<mshadow::Tensor<MDevT, 1, IndexT>, mshadow::Tensor<MDevT, dim, T>, T, IndexT> contiguous_d(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true) const;
+        mshadow::expr::TakeExp<mshadow::Tensor<MDevT, 1, IndexT>, mshadow::Tensor<MDevT, dim, T>, T, IndexT> contiguous_d(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true, const int& dim_to_collapse=0) const;
 
         template<int dim>
-        mshadow::expr::TakeExp<DaliWrapperExp<MDevT, 1, IndexT>, DaliWrapperExp<MDevT, dim, T>, T, IndexT> d(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true) const;
+        mshadow::expr::TakeExp<DaliWrapperExp<MDevT, 1, IndexT>, DaliWrapperExp<MDevT, dim, T>, T, IndexT> d(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true, const int& dim_to_collapse=0) const;
 
         TypedArrayGatherShared(const Array& _source, const Array& _indices, const std::vector<int> shape, const memory::Device& _device);
 
         // CONVENIENCE WRAPPERS
-        mshadow::expr::TakeExp<mshadow::Tensor<MDevT, 1, IndexT>, mshadow::Tensor<MDevT, 1, T>, T, IndexT> contiguous_d1(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true) const;
-        mshadow::expr::TakeExp<mshadow::Tensor<MDevT, 1, IndexT>, mshadow::Tensor<MDevT, 2, T>, T, IndexT> contiguous_d2(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true) const;
-        mshadow::expr::TakeExp<mshadow::Tensor<MDevT, 1, IndexT>, mshadow::Tensor<MDevT, 3, T>, T, IndexT> contiguous_d3(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true) const;
-        mshadow::expr::TakeExp<mshadow::Tensor<MDevT, 1, IndexT>, mshadow::Tensor<MDevT, 4, T>, T, IndexT> contiguous_d4(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true) const;
+        mshadow::expr::TakeExp<mshadow::Tensor<MDevT, 1, IndexT>, mshadow::Tensor<MDevT, 1, T>, T, IndexT> contiguous_d1(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true, const int& dim_to_collapse=0) const;
+        mshadow::expr::TakeExp<mshadow::Tensor<MDevT, 1, IndexT>, mshadow::Tensor<MDevT, 2, T>, T, IndexT> contiguous_d2(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true, const int& dim_to_collapse=0) const;
+        mshadow::expr::TakeExp<mshadow::Tensor<MDevT, 1, IndexT>, mshadow::Tensor<MDevT, 3, T>, T, IndexT> contiguous_d3(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true, const int& dim_to_collapse=0) const;
+        mshadow::expr::TakeExp<mshadow::Tensor<MDevT, 1, IndexT>, mshadow::Tensor<MDevT, 4, T>, T, IndexT> contiguous_d4(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true, const int& dim_to_collapse=0) const;
 
-        mshadow::expr::TakeExp<DaliWrapperExp<MDevT, 1, IndexT>, DaliWrapperExp<MDevT, 1, T>, T, IndexT> d1(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true) const;
-        mshadow::expr::TakeExp<DaliWrapperExp<MDevT, 1, IndexT>, DaliWrapperExp<MDevT, 2, T>, T, IndexT> d2(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true) const;
-        mshadow::expr::TakeExp<DaliWrapperExp<MDevT, 1, IndexT>, DaliWrapperExp<MDevT, 3, T>, T, IndexT> d3(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true) const;
-        mshadow::expr::TakeExp<DaliWrapperExp<MDevT, 1, IndexT>, DaliWrapperExp<MDevT, 4, T>, T, IndexT> d4(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true) const;
+        mshadow::expr::TakeExp<DaliWrapperExp<MDevT, 1, IndexT>, DaliWrapperExp<MDevT, 1, T>, T, IndexT> d1(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true, const int& dim_to_collapse=0) const;
+        mshadow::expr::TakeExp<DaliWrapperExp<MDevT, 1, IndexT>, DaliWrapperExp<MDevT, 2, T>, T, IndexT> d2(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true, const int& dim_to_collapse=0) const;
+        mshadow::expr::TakeExp<DaliWrapperExp<MDevT, 1, IndexT>, DaliWrapperExp<MDevT, 3, T>, T, IndexT> d3(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true, const int& dim_to_collapse=0) const;
+        mshadow::expr::TakeExp<DaliWrapperExp<MDevT, 1, IndexT>, DaliWrapperExp<MDevT, 4, T>, T, IndexT> d4(memory::AM access_mode=memory::AM_READONLY, bool collapse_leading=true, const int& dim_to_collapse=0) const;
     };
 }  // namespace internal
 

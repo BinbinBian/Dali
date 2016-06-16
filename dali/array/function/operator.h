@@ -44,38 +44,38 @@ namespace internal {
 
 template<OPERATOR_T operator_t, int ndim, typename LeftType, typename RightType>
 struct OperatorAssignHelper {
-    static inline void assign_contiguous(LeftType& left, const RightType& right, bool collapse_leading=true) {
+    static inline void assign_contiguous(LeftType& left, const RightType& right, bool collapse_leading=true, const int& dim_to_collapse=0) {
         internal::UseOperator<operator_t>::apply(
-            left.template contiguous_d<ndim>(internal::UseOperator<operator_t>::access_mode, collapse_leading),
+            left.template contiguous_d<ndim>(internal::UseOperator<operator_t>::access_mode, collapse_leading, dim_to_collapse),
             right
         );
     }
 
-    static inline void assign_noncontiguous(LeftType& left, const RightType& right, bool collapse_leading=true) {
+    static inline void assign_noncontiguous(LeftType& left, const RightType& right, bool collapse_leading=true, const int& dim_to_collapse=0) {
         internal::UseOperator<operator_t>::apply(
-            left.template d<ndim>(internal::UseOperator<operator_t>::access_mode, collapse_leading),
+            left.template d<ndim>(internal::UseOperator<operator_t>::access_mode, collapse_leading, dim_to_collapse),
             right
         );
     }
 
-    static inline void assign(LeftType& left, const RightType& right, bool collapse_leading=true) {
+    static inline void assign(LeftType& left, const RightType& right, bool collapse_leading=true, const int& dim_to_collapse=0) {
         if (left.contiguous_memory()) {
-            assign_contiguous(left, right, collapse_leading);
+            assign_contiguous(left, right, collapse_leading, dim_to_collapse);
         } else {
-            assign_noncontiguous(left, right, collapse_leading);
+            assign_noncontiguous(left, right, collapse_leading, dim_to_collapse);
         }
     }
 };
 
 template<OPERATOR_T operator_t, int ndim, typename LeftType, typename RightType>
-void inline operator_assign(LeftType& left, const RightType& right, bool collapse_leading=true) {
-    OperatorAssignHelper<operator_t,ndim,LeftType,RightType>::assign(left, right, collapse_leading);
+void inline operator_assign(LeftType& left, const RightType& right, bool collapse_leading=true, const int& dim_to_collapse=0) {
+    OperatorAssignHelper<operator_t,ndim,LeftType,RightType>::assign(left, right, collapse_leading, dim_to_collapse);
 }
 
 
 template<OPERATOR_T operator_t, int ndim, typename LeftType, typename RightType>
-void inline operator_assign_contiguous(LeftType& left, const RightType& right, bool collapse_leading=true) {
-    OperatorAssignHelper<operator_t,ndim,LeftType,RightType>::assign_contiguous(left, right, collapse_leading);
+void inline operator_assign_contiguous(LeftType& left, const RightType& right, bool collapse_leading=true, const int& dim_to_collapse=0) {
+    OperatorAssignHelper<operator_t,ndim,LeftType,RightType>::assign_contiguous(left, right, collapse_leading, dim_to_collapse);
 }
 
 std::string operator_to_name(const OPERATOR_T& operator_t);

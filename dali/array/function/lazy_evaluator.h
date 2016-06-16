@@ -12,6 +12,17 @@
 #include "dali/utils/print_utils.h"
 
 
+template<class Expr>
+struct CollapseDimensions {
+    static int get(const Expr& expr) {return 0;}
+};
+
+template<typename SrcExpr, typename IndexExp>
+struct CollapseDimensions<LazyTake<SrcExpr, IndexExp>> {
+    static int get(const LazyTake<SrcExpr, IndexExp>& expr) {return expr.indices.bshape().size();}
+};
+
+
 ////////////////////////////////////////////////////////////////////////////////
 //                             LAZY_EVALUATOR                                 //
 ////////////////////////////////////////////////////////////////////////////////
@@ -56,13 +67,15 @@ struct LazyEvaluator : public Function<LazyEvaluator<DestExpr,SrcExpr>, DestExpr
         // to fit out.array.shape(). Here we are assuming that out.array.shape()
         // is not broadcasted, so when the computation actually happens
         // the shape is already fully known every step of the way.
+        ELOG(CollapseDimensions<SrcExpr>::get(expr));
         operator_assign<operator_t, evaluation_dim>(
             out,
             MshadowWrapper<devT,T,decltype(expr)>::wrap(expr,
                                                         out.device,
                                                         out.array.shape(),
                                                         lazy::EvaluationSpec<devT,T,evaluation_dim>()),
-            SrcExpr::collapse_leading
+            SrcExpr::collapse_leading,
+            CollapseDimensions<SrcExpr>::get(expr)
         );
     }
 

@@ -86,7 +86,7 @@ namespace internal {
                                    mshadow::Tensor<MDevT, dim + 1, T>,
                                    T,
                                    IndexT>
-    TypedArraySubtensorShared<MDevT,T,IndexT>::contiguous_d(memory::AM access_mode, bool collapse_leading) const {
+    TypedArraySubtensorShared<MDevT,T,IndexT>::contiguous_d(memory::AM access_mode, bool collapse_leading, const int& dim_to_collapse) const {
         return mshadow::expr::take_from_rows(
             indices.template contiguous_d<dim>(access_mode, collapse_leading),
             source.template contiguous_d<dim + 1>(access_mode, collapse_leading)
@@ -99,7 +99,7 @@ namespace internal {
                                    DaliWrapperExp<MDevT, dim+1, T>,
                                    T,
                                    IndexT>
-    TypedArraySubtensorShared<MDevT,T,IndexT>::d(memory::AM access_mode, bool collapse_leading) const {
+    TypedArraySubtensorShared<MDevT,T,IndexT>::d(memory::AM access_mode, bool collapse_leading, const int& dim_to_collapse) const {
         return mshadow::expr::take_from_rows(
             indices.template d<dim>(access_mode, collapse_leading),
             source.template d<dim + 1>(access_mode, collapse_leading)
@@ -118,7 +118,7 @@ namespace internal {
                            mshadow::Tensor<MDevT, dim, T>,
                            T,
                            IndexT>
-    TypedArrayGatherShared<MDevT,T,IndexT>::contiguous_d(memory::AM access_mode, bool collapse_leading) const {
+    TypedArrayGatherShared<MDevT,T,IndexT>::contiguous_d(memory::AM access_mode, bool collapse_leading, const int& dim_to_collapse) const {
         return mshadow::expr::take(
             indices.template contiguous_d<1>(access_mode, collapse_leading),
             source.template contiguous_d<dim>(access_mode, collapse_leading)
@@ -131,7 +131,7 @@ namespace internal {
                            DaliWrapperExp<MDevT, dim, T>,
                            T,
                            IndexT>
-    TypedArrayGatherShared<MDevT,T,IndexT>::d(memory::AM access_mode, bool collapse_leading) const {
+    TypedArrayGatherShared<MDevT,T,IndexT>::d(memory::AM access_mode, bool collapse_leading, const int& dim_to_collapse) const {
         return mshadow::expr::take(
             indices.template d<1>(access_mode, collapse_leading),
             source.template d<dim>(access_mode, collapse_leading)
